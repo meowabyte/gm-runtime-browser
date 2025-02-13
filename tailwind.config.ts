@@ -9,10 +9,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        "background": "var(--background)",
+        "foreground": "var(--foreground)",
+        "primary": "var(--primary)",
+        "secondary": "var(--secondary)"
       },
-    },
+      fontFamily: {
+        "opensans": "var(--font-opensans)",
+        "redhatdisplay": "var(--font-redhatdisplay)"
+      }
+    }
   },
   plugins: [],
 } satisfies Config;

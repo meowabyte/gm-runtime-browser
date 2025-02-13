@@ -1,21 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --primary: #8bc34a;
+    --secondary: #828282;
+    --background: #151515;
+    --foreground: #e5e5e5;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+@layer base {
+    body {
+        @apply bg-background text-foreground font-opensans;
+    }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+    code:not(.hljs), select {
+        @apply bg-neutral-800 text-neutral-200 p-1 border-[1px] border-neutral-700;
+    }
+
+    label:has(~ select) {
+        @apply text-primary font-semibold mr-2;
+    }
+
+    a {
+        @apply text-primary font-semibold;
+    }
+
+    h1 {
+        @apply text-6xl font-bold font-redhatdisplay;
+    }
+
+
+    h2 {
+        @apply text-2xl font-bold font-redhatdisplay;
+    }
+
+    tbody {
+        td {
+            @apply text-center p-3 border-[1px] border-neutral-700;
+        }
+
+        tr:first-child > td {
+            @apply border-2;
+        }
+    }
 }

@@ -1,101 +1,72 @@
+import Browser from "@/components/browser";
 import Image from "next/image";
+import GameMakerLogo from "#/img/gm.webp"
+import CodeBlock from "@/components/codeblock";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  return <>
+  <header className="p-8 flex flex-col justify-center items-center gap-5 text-center w-1/2 place-self-center">
+    <div className="flex flex-col justify-center items-center gap-3">
+      <Image priority height={150} src={GameMakerLogo} alt="Gamemaker Logo" />
+      <h1 className="text-primary">GM Runtime Browser</h1>
     </div>
-  );
+    <span className="text-lg">
+      Browse various GameMaker runtimes for various platforms.<br/>
+      I mainly made this tool because I wanted to experiment with porting Windows-only mods/games to Linux so easily accessible Runtimes will be useful for me (and maybe <b>you</b>!)
+    </span>
+  </header>
+  <main className="flex flex-col gap-10 justify-center items-center place-self-center m-10 w-3/4">
+    <Browser />
+    <div className="flex flex-col gap-8 *:flex *:flex-col *:gap-2">
+      <h1>FAQ:</h1>
+      <div>
+        <h2>Why passwords? How do they work?</h2>
+        <span>
+          Shout out to <a href="https://mike309game.github.io/gms.html">this page</a> for calculations.
+          All packages have been password protected by YoYo Games as part of a security, probably so people couldnt be able to play with it outside of the editor.
+          Yet, some of the smart people were able to find out how to get around it.
+          <br /><br />
+          The password is created by grabbing the <code>ID</code> of the runtime, then prefixing it with <code>MRJS</code> and suffixing with <code>PHMD</code>.
+          The string&apos;s gonna look something like this: <code className="text-neutral-500">MRJS<span className="text-primary">ID</span>PHMD</code>.
+          Then, you hash the string with md5 hashing and returned buffer encode into base64.
+          <br /><br />
+          <b>Here&apos;s example in JavaScript using Crypto API:</b>
+          <CodeBlock code={
+`
+import { hash } from "crypto"
+
+const ID = "abc"
+
+// MRJSabcPHMD
+const str = "MRJS" + ID + "PHMD"
+
+const password = hash("md5", str, "base64")
+
+// Output: "X17SMVEsCjSCotv804SBSg=="
+console.log(password)
+`
+          } />
+        </span>
+      </div>
+    </div>
+    <div>
+      <h2>What&apos;s the difference between Main/Beta/Old&lt;year&gt;?</h2>
+      <span>
+        Every type gets runtimes from different sources. These sources are:
+        <br /><br />
+        <b>Main</b> - Up to date, latest versions of runtimes available in GM.<br />
+        <b>Beta</b> - Even more up to date, beta versions of runtimes available in GM. Usually have new features quicker than latest ones for the price of stability. Optional on stable version of GM and required when using GM on Linux.<br />
+        
+        <b>Old &lt;year&gt;</b> - These runtimes are usually taken from <a href="http://web.archive.org/web/*/http://gms.yoyogames.com/Zeus-Runtime.rss">Web archive</a> as they are not listed on official lists anymore.
+        For some reason these files are still kept on GM servers so you don&apos;t need to access them through Web archive yourself.
+
+      </span>
+    </div>
+  </main>
+  <footer className="text-secondary w-3/4 text-center place-self-center *:block p-10">
+    <span>Created with <span className="animate-pulse text-primary">&lt;3</span> by <a href="https://meowpa.ws">kvba5</a></span>
+    <span>GM Runtime Browser is a third party website and is not associated or partnered with YoYo Games, GameMaker or any of it&apos;s partners in any way.</span>
+    <span>None of the files presented on here are hosted on the website.</span>
+  </footer>
+  </>
 }
