@@ -26,23 +26,24 @@ export default function Home() {
           All packages have been password protected by YoYo Games as part of a security, probably so people couldnt be able to play with it outside of the editor.
           Yet, some of the smart people were able to find out how to get around it.
           <br /><br />
-          The password is created by grabbing the <code>ID</code> of the runtime, then prefixing it with <code>MRJS</code> and suffixing with <code>PHMD</code>.
-          The string&apos;s gonna look something like this: <code className="text-neutral-500">MRJS<span className="text-primary">ID</span>PHMD</code>.
-          Then, you hash the string with md5 hashing and returned buffer encode into base64.
+          The password is created by grabbing the <code>ID</code> of the runtime and it&apos;s extension (<code>EXT</code>), then prefixing it with <code>MRJA</code> and suffixing with <code>PHMD</code>.
+          The string&apos;s gonna look something like this: <code className="text-neutral-500">MRJA<span className="text-primary">ID.EXT</span>PHMD</code>.
+          Then, you hash the string with special implementation of md5 hashing and returned buffer encode into base64.
           <br /><br />
-          <b>Here&apos;s example in JavaScript using Crypto API:</b>
+          <b>Here&apos;s example in JavaScript using my package &quot;<a href="https://github.com/kvba5/Yoyo-MD5">yoyo-md5</a>&quot;:</b>
           <CodeBlock code={
 `
-import { hash } from "crypto"
+import { yoyomd5 } from "yoyo-md5"
 
 const ID = "abc"
+const EXT = "zip"
 
-// MRJSabcPHMD
-const str = "MRJS" + ID + "PHMD"
+// MRJAabcPHMD
+const str = \`MRJA\${ID}.\${EXT}PHMD\`
 
-const password = hash("md5", str, "base64")
+const password = yoyomd5(str)
 
-// Output: "X17SMVEsCjSCotv804SBSg=="
+// Output: "92NrMoGv3KF1Eu0wIZeXoA=="
 console.log(password)
 `
           } />

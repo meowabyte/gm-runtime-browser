@@ -8,16 +8,18 @@ import {
 import { useCallback, useEffect, useMemo, useState } from "react"
 import Loading from "./loading"
 import { normalizeId } from "@/app/helpers/string"
-import { md5 } from "js-md5"
 import { compare as compareversions } from "compare-versions"
+import { yoyomd5 } from "yoyo-md5"
+
 
 type RuntimeVersionItemExt = RuntimeVersionItem & {
     id: string,
     password: string
 }
 
+// TODO: fix md5
 const itemUrlToId = (url: string) => new URL(url).pathname.split(/[\/\.]/)[1]
-const itemIdToPass = (id: string) => md5.base64(`MRJS${id}PHMD`)
+const itemIdToPass = (id: string) => btoa(yoyomd5(`MRJA${id}.zipPHMD`))
 
 const extendItem = (i: RuntimeVersionItem): RuntimeVersionItemExt => {
     const id = itemUrlToId(i.url)
