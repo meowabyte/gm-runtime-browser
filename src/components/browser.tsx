@@ -97,8 +97,10 @@ export default function Browser() {
     // Reset filters if source changed
     useEffect(() => { resetFilters() }, [resetFilters, items])
 
-    // Reset page on items change
-    useEffect(() => { setPage(0) }, [items])
+    // Prevent page overflowing
+    useEffect(() => {
+        setPage(Math.min(page, maxPages-1))
+    }, [filteredItems])
 
     if (!items) return <Loader2 className="animate-spin" />
 
