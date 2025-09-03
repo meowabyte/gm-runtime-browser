@@ -1,37 +1,27 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-:root {
-    --primary: #8bc34a;
-    --secondary: #828282;
-    --background: #151515;
-    --foreground: #e5e5e5;
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #8bc34a;
+    --color-secondary: #828282;
+    --color-background: #151515;
+    --color-foreground: #e5e5e5;
+    --font-opensans: var(--font-opensans);
+    --font-redhatdisplay: var(--font-redhatdisplay);
 }
 
 @layer base {
-    body {
-        @apply bg-background text-foreground font-opensans;
-    }
+    body { @apply bg-background text-foreground font-opensans; }
+
+    a, button { @apply text-primary font-semibold cursor-pointer; }
+
+    label { @apply text-primary font-semibold mr-2; }
+    
+    h1, h2, h3 { @apply font-bold font-redhatdisplay; }
+    h1 { @apply text-6xl; }
+    h2 { @apply text-2xl; }
 
     code:not(.hljs), select {
         @apply bg-neutral-800 text-neutral-200 p-1 border-[1px] border-neutral-700;
-    }
-
-    label:has(~ select) {
-        @apply text-primary font-semibold mr-2;
-    }
-
-    a {
-        @apply text-primary font-semibold;
-    }
-
-    h1 {
-        @apply text-6xl font-bold font-redhatdisplay;
-    }
-
-
-    h2 {
-        @apply text-2xl font-bold font-redhatdisplay;
     }
 
     tbody {
@@ -39,8 +29,6 @@
             @apply text-center p-3 border-[1px] border-neutral-700;
         }
 
-        tr:first-child > td {
-            @apply border-2;
-        }
+        tr:first-child > td { @apply border-2; }
     }
 }
