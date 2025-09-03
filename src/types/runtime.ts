@@ -5,12 +5,16 @@ export enum EntryTypes {
     "old-2020" = "http://web.archive.org/web/20200518222719oe_/http://gms.yoyogames.com/Zeus-Runtime.rss"
 }
 
-export const entryTypeKeys = Object.keys(EntryTypes)
-
 export type EntryType = keyof typeof EntryTypes
+export const entryTypeKeys = Object.keys(EntryTypes) as EntryType[]
 
-export type RuntimeVersionItem = {
+export type RunnerVersionItem = {
     platform: string,
     url: string,
     version: string
+}
+
+export type RunnerData = RunnerVersionItem & {
+    id: string,
+    password: string
 }

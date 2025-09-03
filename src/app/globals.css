@@ -10,9 +10,9 @@
 }
 
 @layer base {
-    body { @apply bg-background text-foreground font-opensans; }
+    body { @apply bg-background text-foreground font-opensans select-none; }
 
-    a, button { @apply text-primary font-semibold cursor-pointer; }
+    a, button { @apply text-primary font-semibold decoration-dotted decoration-2 underline-offset-2 hover:underline cursor-pointer; }
 
     label { @apply text-primary font-semibold mr-2; }
     
@@ -20,9 +20,8 @@
     h1 { @apply text-6xl; }
     h2 { @apply text-2xl; }
 
-    code:not(.hljs), select {
-        @apply bg-neutral-800 text-neutral-200 p-1 border-[1px] border-neutral-700;
-    }
+    code { @apply select-text; }
+    code:not(.hljs), select { @apply bg-neutral-800 text-neutral-200 p-1 border-[1px] border-neutral-700; }
 
     tbody {
         td {
