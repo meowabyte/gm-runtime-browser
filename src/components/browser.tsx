@@ -15,7 +15,7 @@ import Copyable from "./copyable"
 const extendRunner = (i: RunnerVersionItem): RunnerData => {
     const fileName = new URL(i.url, location.href).pathname.replace(/^.*\//, "")
     const id = fileName.replace(/\.[^.]*$/, "")
-    const password = Buffer.from(yoyomd5(`MRJA${id}.zipPHMD`), "binary").toString("base64")
+    const password = Buffer.from(yoyomd5(`MRJA${fileName}PHMD`), "binary").toString("base64")
 
     return {
         ...i,
